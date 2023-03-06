@@ -31,11 +31,24 @@ function handleImageClick(evt) {
         return;
     }
 
-    console.dir(evt.target.dataset.source)
+    const modalImg = basicLightbox.create(`<img src="${evt.target.dataset.source}">`, {
+        onShow: (modalImg) => { document.addEventListener(`keydown`, escClose)},
+        onClose: (modalImg) => { document.removeEventListener(`keydown`, escClose)},
+    });
 
-    const modalImg = basicLightbox.create(`<img src="${evt.target.dataset.source}" width="800" height="600">
-    `);
+    // const instance = basicLightbox.create(html, {
+	// 	onShow: (instance) => console.log('onShow', instance),
+	// 	onClose: (instance) => console.log('onClose', instance)
+	// })
 
-    modalImg.show()
+	// instance.show((instance) => console.log('finished show()', instance))
+
+    modalImg.show();
+
+    function escClose({code}) {
+        if (code === `Escape`) {
+            modalImg.close();
+        }
+    }
 }
 
